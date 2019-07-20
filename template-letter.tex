@@ -190,6 +190,25 @@ $endif$
 
 % set default figure placement to htbp
 \makeatletter
+$if(signature)$
+$else$
+$if(signature-vspace)$
+% Remove distance between the closing phrase and signature if signature
+% is missing: https://tex.stackexchange.com/a/68496
+\renewcommand{\closing}[1]{\par\nobreak\vspace{\parskip}%
+  \stopbreaks
+  \noindent
+  \ifx\@empty\fromaddress\else
+  \hspace*{\longindentation}\fi
+  \parbox{\indentedwidth}{\raggedright
+       \ignorespaces #1\\[$signature-vspace$]%
+       \ifx\@empty\fromsig
+           \fromname
+       \else \fromsig \fi\strut}%
+   \par
+  }
+$endif$
+$endif$
 \def\fps@figure{htbp}
 \makeatother
 
